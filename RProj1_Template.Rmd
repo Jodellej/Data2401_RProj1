@@ -16,10 +16,10 @@ library(datasauRus)
 
 
 ### Exercise 1
-
 the datasaurus_dozen has 1846 rows and 2 columns.The variables included are x and y values
 
 ### Exercise 2
+## Now to plot the dino set
 
 ```{r plot-dino, fig.height=3, fig.width=6}
 dino_data <- datasaurus_dozen %>%
@@ -28,12 +28,7 @@ ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
 
-dino_data %>%
-summarize(r = cor(x,y))
-## # A tibble: 1 x 1
-## r
-## <dbl>
-## 1 -0.0645
+
 ```{r cor-dino}
 dino_data %>%
   summarize(r = cor(x, y))
@@ -41,36 +36,64 @@ dino_data %>%
 
 ### Exercise 3
 
-(Add code and narrative as needed. Note that the R chunks are labeled with `plot-star` and `cor-star` to provide spaces to place the code for plotting and calculating the correlation coefficient. To finish, remember to clean up the narrative by removing these instructions.)
-
-
+## Plots for star dataset
 
 ```{r plot-star}
-
-
+star_data <- datasaurus_dozen %>%
+filter(dataset == "star") 
+ggplot(data = star_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 ```
 
-I'm some text, you should replace me with more meaningful text...
- 
+Correlation for star data set
 ```{r cor-star}
-
-
+star_data %>%
+  summarize(r = cor(x, y))
 ```
 
 ### Exercise 4
-
-(Add code and narrative as needed. Note that two R chunks are given but they are not labeled. Use the convention from above to name them appropriately.)
-
-```{r}
-
+## Now to plot the circle dataset
+ 
+```{r plot-circle}
+circle_data <- datasaurus_dozen %>%
+filter(dataset == "circle") 
+ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 
 ```
 
-```{r}
-
+```{r cor-circle}
+circle_data %>%
+  summarize(r = cor (x,y))
 
 ```
 
 ### Exercise 5
+## Plotting all the datasets
 
-(Add code and narrative as needed. To add R chunks either type out the backticks, curly braces, and the letter `r` or use the Insert chunk button above, with the green +C.)
+```
+ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset))+
+geom_point()+
+facet_wrap(~ dataset, ncol = 3) + # facet the dataset variable, in 3 cols 
+theme(legend.position = "none") 
+datasaurus_dozen %>%
+group_by(dataset) %>% 
+summarize(r = cor(x, y)) %>% 
+print(13)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## # A tibble: 13 x 2
+## dataset r
+##
+## 1 away -0.0641
+## 2 bullseye -0.0686
+## 3 circle -0.0683
+## 4 dino -0.0645
+## 5 dots -0.0603
+## 6 h_lines -0.0617 
+## 7 high_lines -0.0685
+## 8 slant_down -0.0690
+## 9 slant_up -0.0686
+## 10 star -0.0630
+## 11 v_lines -0.0694
+## 12 wide_lines -0.0666
+## 13 x_shape -0.0656 
