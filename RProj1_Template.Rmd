@@ -27,16 +27,14 @@ dino_data <- datasaurus_dozen %>%
 ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
-```
+
 dino_data %>%
-summarize(r + cor(x, y))
-## #a tibble: 1 * 1
-##r
-##<dbl>
-##1 - 0.0645
-```
-```
-{r cor-dino}
+summarize(r = cor(x,y))
+## # A tibble: 1 x 1
+## r
+## <dbl>
+## 1 -0.0645
+```{r cor-dino}
 dino_data %>%
   summarize(r = cor(x, y))
 ```
